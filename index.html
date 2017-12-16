@@ -6,11 +6,17 @@
     </head>
     <body>
         <p>LOL</p>
-        
+        <form action="">
+            <input id="s"/><button>Find</button>
+        </form>
         <script>
             $(function(){
                 var socket = io();
-                socket.emit("info request", "leel kek xd");
+                $("form").submit(function(){
+                    socket.emit("info request", $("#s").val());
+                    $("#s").val('');
+                    return "xd";
+                });
             });
         </script>
     </body>
