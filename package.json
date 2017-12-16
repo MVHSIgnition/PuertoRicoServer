@@ -1,0 +1,12 @@
+{
+	"name": "PuertoRicoAppServer",
+	"version": "0.0.1",
+	"description": "Server for MVHS Ignition's Puerto Rico App",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"express": "^4.16.2",
+		"socket.io": "^2.0.4"
+	}
+}
