@@ -2,11 +2,11 @@ var express = require("express")
 var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
+var fs = require("fs");
 
 app.use(express.static(__dirname));
 
-var dir  = "./transcript.txt";
-var file = new File(dir);
+var dir  = "./broadcast.txt";
 
 server.listen(process.env.PORT || 1266, function() {
     var port = server.address().port;
@@ -15,12 +15,13 @@ server.listen(process.env.PORT || 1266, function() {
 
 io.on("connection", function(socket) {
     socket.on("info request",function(msg){
-        //process request
-        file.open("r");
-        while(!file.eof){
-            var line = file.readln();
-            if(line.includes(msg))console.log(line);
+        var json;
+        fs.readFile("transcript.json","utf8",function(err,contents){
+            json = JSON.parse(contents);
+        });
+        for(var i = 0; i < json.data.length; i++){
+            line = json.data[i];
+            if(line.includes(msg.toUpperCase()))console.log(line);
         }
-        file.close();
     });
 });

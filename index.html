@@ -14,6 +14,7 @@
                 var socket = io();
                 $("form").submit(function(){
                     socket.emit("info request", $("#s").val());
+                    console.log($("#s").val());
                     $("#s").val('');
                     return "xd";
                 });
