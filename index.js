@@ -16,6 +16,7 @@ server.listen(process.env.PORT || 1266, function() {
 io.on("connection", function(socket) {
     socket.on("info request",function(msg){
         if(msg.includes(","))msg = msg.split(",");
+        else msg = [msg];
         fs.readFile("./transcript.json","utf8",function(err,contents){
             if(err)throw err;
             var jsonf = JSON.parse(contents);
