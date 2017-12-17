@@ -66,7 +66,7 @@ io.on("connection", function(socket) {
                     if (match) {
                         //bold the match
                         line = line.split(" ");
-                        for (var k = 1; k < matches.length; k++) {
+                        for (var k = 0; k < msg[i].length; k++) {
                             for (var l = 0; l < line.length; l++) {
                                 if (line[l].toUpperCase() == msg[i][k].trim().toUpperCase()) {
                                     console.log("BOLD");
