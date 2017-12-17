@@ -68,8 +68,9 @@ io.on("connection", function(socket) {
                         line = line.split(" ");
                         for (var k = 1; k < matches.length; k++) {
                             for (var l = 0; l < line.length; l++) {
-                                if (line[l] == matches[k]) {
-                                    line[l] == "<b>" + line[l] + "</b>"
+                                if (line[l].toUpperCase() == msg[i][k].trim().toUpperCase()) {
+                                    console.log("BOLD");
+                                    line[l] == "<b>" + line[l] + "</b>";
                                 }
                             }
                         }
