@@ -17,15 +17,26 @@ io.on("connection", function(socket) {
     socket.on("info request",function(msg){
         if(msg.includes(","))msg = msg.split(",");
         else msg = [msg];
+				
+				for (var i = 0; i < msg.length; i++) {
+					if (msg[i].includes("+")) msg[i] = msg[i].split("+");
+					else msg[i] = [msg[i]];
+				}
         fs.readFile("./transcript.json","utf8",function(err,contents){
             if(err)throw err;
             var jsonf = JSON.parse(contents);
             for(var i = 0; i < msg.length; i++){
                 //line = jsonf.data[i];
-                var matches = [msg[i]];
+                var matches = [msg[i].join(" + ")]; 
                 for(var j = 0; j < jsonf.data.length; j++){
                     line = jsonf.data[j];
-                    if(line.includes(msg[i].trim().toUpperCase())) {
+                    var match = true;
+                    for (var k = 0; k < msg[i].length; k++) {
+                        if (!line.includes(msg[i][k].trim().toUpperCase())) {
+                            match = false;
+                        }
+                    }
+                    if (match) {
                         console.log(line);
                         matches.push(line);
                     }
