@@ -3,6 +3,7 @@ var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
 var fs = require("fs");
+var request = require("request");
 
 app.use(express.static(__dirname));
 
@@ -36,6 +37,14 @@ io.on("connection", function(socket) {
                             match = false;
                         }
                     }
+                    //remove similar items
+                    for (var k = 1; k < matches.length; k++) {
+                        if (checkSimilar(matches[k], line)) {
+                            console.log("removing line: " + line);
+                            match = false;
+                        }
+                    }
+                    
                     if (match) {
                         console.log(line);
                         matches.push(line);
@@ -62,3 +71,25 @@ io.on("connection", function(socket) {
     
     });
 });
+
+function checkSimilar(text1, text2) {
+    text1 = text1.split(" ");
+    text2 = text2.split(" ");
+    
+    if (text1.length > 1 && text2.length > 1) {
+        var count = 0;
+        
+        for (var i = 0; i < text1.length; i++) {
+            for (var j = 0; j < text2.length; j++) {
+                if (i == j && text1[i] == text2[j]) {
+                    count++;
+                }
+            }
+        }
+    }
+    
+    if (count >= text1.length-2 || count >= text2.length-2) {
+        return true;
+    }
+    return false;
+}
