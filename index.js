@@ -15,18 +15,23 @@ server.listen(process.env.PORT || 1266, function() {
 
 io.on("connection", function(socket) {
     socket.on("info request",function(msg){
+        if(msg.includes(","))msg = msg.split(",");
         fs.readFile("./transcript.json","utf8",function(err,contents){
             if(err)throw err;
             var jsonf = JSON.parse(contents);
-						var matches = [];
-            for(var i = 0; i < jsonf.data.length; i++){
-                line = jsonf.data[i];
-                if(line.includes(msg.toUpperCase())) {
-									console.log(line);
-									matches.push(line);
-								}
+            for(var i = 0; i < msg.length; i++){
+                //line = jsonf.data[i];
+                var matches = [msg[i]];
+                for(var j = 0; j < jsonf.data.length; j++){
+                    line = jsonf.data[j];
+                    if(line.includes(msg[i].trim().toUpperCase())) {
+                        console.log(line);
+                        matches.push(line);
+                    }
+                }
+                if(matches.length == 1)matches.push("No information found.");
+                socket.emit("info response", matches);
             }
-						socket.emit("info response", matches);
         });
     });
     socket.on("info add",function(msg){

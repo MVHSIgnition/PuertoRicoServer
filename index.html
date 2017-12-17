@@ -22,14 +22,17 @@
 				
 				socket.on("info response", function(response) {
 					console.log(response);
-					$("#responses").append("<h1>" + $("#s").val() + "</h1>");
+					$("#responses").append("<h1>" + response[0] + "</h1>");
 					$("#s").val('');
-					response.forEach(function(item, index, response) {
-						index += 1;
-						$("#responses").append("<p style=\"margin-left:5-em\">" + index + ": " + item + "</p>");
+					//response.forEach(function(item, index, response) {
+					//	index += 1;
+					//	$("#responses").append("<p style=\"margin-left:5-em\">" + index + ": " + item + "</p>");
 						
-					});
-					responseNum++;
+					//});
+					
+					for(var i = 1; i < response.length; i++){
+					    $("#responses").append("<p style=\"margin-left:5-em\">" + i + ": " + response[i] + "</p>");
+					}
 				});
             });
         </script>
