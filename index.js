@@ -32,7 +32,7 @@ io.on("connection", function(socket) {
                     line = jsonf.data[j];
                     var match = true;
                     for (var k = 0; k < msg[i].length; k++) {
-                        if (!line.includes(msg[i][k].trim().toUpperCase())) {
+                        if (!line.toUpperCase().includes(msg[i][k].trim().toUpperCase())) {
                             match = false;
                         }
                     }
