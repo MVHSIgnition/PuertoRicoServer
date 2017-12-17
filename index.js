@@ -19,10 +19,10 @@ io.on("connection", function(socket) {
         fs.readFile("./transcript.json","utf8",function(err,contents){
             if(err)throw err;
             jsonf = JSON.parse(contents);
+						for(var i = 0; i < jsonf.data.length; i++){
+							line = jsonf.data[i];
+							if(line.includes(msg.toUpperCase()))console.log(line);
+					}
         });
-        for(var i = 0; i < jsonf.data.length; i++){
-            line = jsonf.data[i];
-            if(line.includes(msg.toUpperCase()))console.log(line);
-        }
     });
 });
