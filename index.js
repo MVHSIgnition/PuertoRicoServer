@@ -64,6 +64,17 @@ io.on("connection", function(socket) {
                     }
                     
                     if (match) {
+                        //bold the match
+                        line = line.split(" ");
+                        for (var k = 1; k < matches.length; k++) {
+                            for (var l = 0; l < line.length; l++) {
+                                if (line[l] == matches[k]) {
+                                    line[l] == "<b>" + line[l] + "</b>"
+                                }
+                            }
+                        }
+                        line = line.join(" ");
+                        
                         console.log(line);
                         matches.push(line);
                     }
