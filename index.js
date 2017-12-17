@@ -6,7 +6,7 @@ var fs = require("fs");
 
 app.use(express.static(__dirname));
 
-var dir  = "./broadcast.txt";
+//var dir  = "./broadcast.txt";
 
 server.listen(process.env.PORT || 1266, function() {
     var port = server.address().port;
@@ -15,12 +15,13 @@ server.listen(process.env.PORT || 1266, function() {
 
 io.on("connection", function(socket) {
     socket.on("info request",function(msg){
-        var json;
-        fs.readFile("transcript.json","utf8",function(err,contents){
-            json = JSON.parse(contents);
+        var jsonf;
+        fs.readFile("./transcript.json","utf8",function(err,contents){
+            if(err)throw err;
+            jsonf = JSON.parse(contents);
         });
-        for(var i = 0; i < json.data.length; i++){
-            line = json.data[i];
+        for(var i = 0; i < jsonf.data.length; i++){
+            line = jsonf.data[i];
             if(line.includes(msg.toUpperCase()))console.log(line);
         }
     });
