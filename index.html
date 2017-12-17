@@ -9,15 +9,28 @@
         <form action="">
             <input id="s"/><button>Find</button>
         </form>
+		<div id="responses"></div>
         <script>
             $(function(){
+				var responseNum = 1;
                 var socket = io();
                 $("form").submit(function(){
                     socket.emit("info request", $("#s").val());
                     console.log($("#s").val());
-                    $("#s").val('');
-                    return "xd";
+                    return false;
                 });
+				
+				socket.on("info response", function(response) {
+					console.log(response);
+					$("#responses").append("<h1>" + $("#s").val() + "</h1>");
+					$("#s").val('');
+					response.forEach(function(item, index, response) {
+						index += 1;
+						$("#responses").append("<p style=\"margin-left:5-em\">" + index + ": " + item + "</p>");
+						
+					});
+					responseNum++;
+				});
             });
         </script>
     </body>
