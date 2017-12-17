@@ -20,9 +20,24 @@ io.on("connection", function(socket) {
             if(err)throw err;
             jsonf = JSON.parse(contents);
             for(var i = 0; i < jsonf.data.length; i++){
-				line = jsonf.data[i];
-				if(line.includes(msg.toUpperCase()))console.log(line);
-			}
+                line = jsonf.data[i];
+                if(line.includes(msg.toUpperCase()))console.log(line);
+            }
         });
+    });
+    socket.on("info add",function(msg){
+        var json;
+        fs.readFile("./transcript.json","utf8",function(err,contents){
+            if(err)throw err;
+            json = JSON.parse(contents);
+        })
+        .then(function(){
+            json.data.push(msg)
+            fs.writeFile("./transcript.json",json,function(err){
+                if(err) throw err;
+            });
+        });    
+        
+    
     });
 });
