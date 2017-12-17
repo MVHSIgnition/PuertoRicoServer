@@ -5,10 +5,10 @@ var io = require("socket.io")(server);
 var fs = require("fs");
 var request = require("request");
 
-//app.use(express.static(__dirname));
+app.use(express.static(__dirname));
 
 // Add headers
-app.use(function (req, res, next) {
+/*app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'https://mvhsignition.github.io/PuertoRico/');
@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
 
     // Pass to next layer of middleware
     next();
-});
+});*/
 
 server.listen(process.env.PORT || 1266, function() {
     var port = server.address().port;
