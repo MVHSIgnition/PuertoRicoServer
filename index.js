@@ -68,15 +68,17 @@ io.on("connection", function(socket) {
                         line = line.split(" ");
                         for (var k = 0; k < msg[i].length; k++) {
                             for (var l = 0; l < line.length; l++) {
-                                if (line[l].toUpperCase() == msg[i][k].trim().toUpperCase()) {
-                                    console.log("BOLD");
-                                    line[l] == "<b>" + line[l] + "</b>";
+                                //console.log(line[l].toUpperCase() + " vs " + msg[i][k].trim().toUpperCase());
+                                
+                                if ( line[l].toUpperCase().includes(msg[i][k].trim().toUpperCase()) ) {
+                                    var index = line[l].toUpperCase().indexOf(msg[i][k].trim().toUpperCase());
+                                    line[l] = line[l].slice(0, index) + "<mark>" + line[l].slice(index, index+msg[i][k].trim().length) + "</mark>" + line[l].slice(index+msg[i][k].trim().length, line[l].length);
                                 }
                             }
                         }
                         line = line.join(" ");
                         
-                        console.log(line);
+                        console.log("line: " +  line);
                         matches.push(line);
                     }
                 }
